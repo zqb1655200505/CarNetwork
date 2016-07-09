@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="180sp"
+        android:background="@drawable/div"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/wait"
+            android:id="@+id/pic" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/brand"
+                android:text="品牌:宝马"
+                android:gravity="center"
+                android:textColor="#719fa0"
+                android:textSize="18dp"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/type"
+                android:text="车型:敞篷车"
+                android:textColor="#719fa0"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textSize="18dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

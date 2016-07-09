@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">车联网</string>
+    <string name="title_activity_test">Test</string>
+    <string name="scan">扫一扫</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+</resources>
