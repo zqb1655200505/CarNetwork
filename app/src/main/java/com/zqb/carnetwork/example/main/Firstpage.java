@@ -1,5 +1,6 @@
 package com.zqb.carnetwork.example.main;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -599,24 +600,73 @@ public class Firstpage extends AppCompatActivity{
             case SCANNIN_GREQUEST_CODE:
                 if(resultCode == RESULT_OK){
                     Bundle bundle = data.getExtras();
-                    String result=bundle.getString("result");
-                    try {
-                        JSONObject jsonObject=new JSONObject(result);
-                        String brand=jsonObject.optString("brand");
-                        String sign=jsonObject.optString("sign");
-                        String type=jsonObject.optString("type");
-                        String plate_number=jsonObject.optString("plate_number");
-                        String engine_number=jsonObject.optString("engine_number");
-                        String body_level=jsonObject.optString("body_level");
-                        String mile_number=jsonObject.optString("mile_number");
-                        String gas_num=jsonObject.optString("gas_num");
-                        String engine_performance=jsonObject.optString("engine_performance");
-                        String speed_shift=jsonObject.optString("speed_shift");
-                        String car_lamb=jsonObject.optString("car_lamb");
+                    final String result=bundle.getString("result");
+                    new AlertDialog.Builder(Firstpage.this)
+                            .setTitle("车辆信息")
+                            .setMessage(result.toString())
+                            .setPositiveButton("添加", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    try {
+                                        JSONObject jsonObject=new JSONObject(result);
+                                        final String brand=jsonObject.optString("brand");
+                                        final String sign=jsonObject.optString("sign");
+                                        final String type=jsonObject.optString("type");
+                                        final String plate_number=jsonObject.optString("plate_number");
+                                        final String engine_number=jsonObject.optString("engine_number");
+                                        final String car_frame_number=jsonObject.optString("car_frame_number");
+                                        final String body_level=jsonObject.optString("body_level");
+                                        final String mile_number=jsonObject.optString("mile_number");
+                                        final String gas_num=jsonObject.optString("gas_num");
+                                        final String engine_performance=jsonObject.optString("engine_performance");
+                                        final String speed_shift=jsonObject.optString("speed_shift");
+                                        final String car_lamb=jsonObject.optString("car_lamb");
+                                        StringRequest request=new StringRequest(Request.Method.POST, NetUrl.scan_result, new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String s) {
+                                                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError volleyError) {
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                                            }
+                                        }){
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                HashMap<String,String>map=new HashMap<String,String>();
+                                                map.put("brand",brand);
+                                                map.put("sign",sign);
+                                                map.put("type",type);
+                                                map.put("plate_number",plate_number);
+                                                map.put("engine_number",engine_number);
+                                                map.put("car_frame_number",car_frame_number);
+                                                map.put("body_level",body_level);
+                                                map.put("mile_number",mile_number);
+                                                map.put("gas_num",gas_num);
+                                                map.put("engine_performance",engine_performance);
+                                                map.put("speed_shift",speed_shift);
+                                                map.put("car_lamb",car_lamb);
+                                                map.put("username",username);
+                                                return map;
+                                            }
+                                        };
+                                        queue.add(request);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .show();
+
+
                     Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(Firstpage.this,QRcodeResult.class);
                     intent.putExtra("qrcode_result",result);

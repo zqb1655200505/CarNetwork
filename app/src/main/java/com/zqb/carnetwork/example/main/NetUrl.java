@@ -21,4 +21,5 @@ public class NetUrl {
     public static final String query_head_pic=Base+"php/query_head_pic.php";
     public static final String query_performance=Base+"php/query_performance.php";
     public static final String insert=Base+"php/insert.php";
+    public static final String scan_result=Base+"php/scan_result.php";
 }
