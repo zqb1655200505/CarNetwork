@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -100,6 +101,19 @@ public class Firstpage extends AppCompatActivity{
     private JSONObject json;
     private JSONObject json1;
 
+    private String brand1;
+    private String sign1;
+    private String type1;
+    private String plate_number1;
+    private String engine_number1;
+    private String car_frame_number1;
+    private String body_level1;
+    private String mile_number1;
+    private String gas_num1;
+    private String engine_performance1;
+    private String speed_shift1;
+    private String car_lamb1;
+    private String str;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -595,82 +609,95 @@ public class Firstpage extends AppCompatActivity{
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case SCANNIN_GREQUEST_CODE:
                 if(resultCode == RESULT_OK){
                     Bundle bundle = data.getExtras();
                     final String result=bundle.getString("result");
+                    try {
+                        JSONObject jsonObject=new JSONObject(result);
+                        brand1=jsonObject.optString("brand");
+                        sign1=jsonObject.optString("sign");
+                        type1=jsonObject.optString("type");
+                        plate_number1=jsonObject.optString("plate_number");
+                        engine_number1=jsonObject.optString("engine_number");
+                        car_frame_number1=jsonObject.optString("car_frame_number");
+                        body_level1=jsonObject.optString("body_level");
+                        mile_number1=jsonObject.optString("mile_number");
+                        gas_num1=jsonObject.optString("gas_num");
+                        engine_performance1=jsonObject.optString("engine_performance");
+                        speed_shift1=jsonObject.optString("speed_shift");
+                        car_lamb1=jsonObject.optString("car_lamb");
+                        str="brand:"+brand+"<br/>"
+                            +"sign:"+sign1+"<br/>"
+                            +"type:"+type+"<br/>"
+                            +"plate_number:"+plate_number1+"<br/>"
+                            +"engine_number:"+engine_number1+"<br/>"
+                            +"car_frame_number:"+car_frame_number1+"<br/>"
+                            +"body_level:"+body_level1+"<br/>"
+                            +"mile_number:"+mile_number1+"<br/>"
+                            +"gas_num:"+gas_num1+"<br/>"
+                            +"engine_performance:"+engine_performance1+"<br/>"
+                            +"speed_shift:"+speed_shift1+"<br/>"
+                            +"car_lamb:"+car_lamb1+"<br/>";
+                        Log.i("TAG",str);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     new AlertDialog.Builder(Firstpage.this)
-                            .setTitle("车辆信息")
-                            .setMessage(result.toString())
-                            .setPositiveButton("添加", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    try {
-                                        JSONObject jsonObject=new JSONObject(result);
-                                        final String brand=jsonObject.optString("brand");
-                                        final String sign=jsonObject.optString("sign");
-                                        final String type=jsonObject.optString("type");
-                                        final String plate_number=jsonObject.optString("plate_number");
-                                        final String engine_number=jsonObject.optString("engine_number");
-                                        final String car_frame_number=jsonObject.optString("car_frame_number");
-                                        final String body_level=jsonObject.optString("body_level");
-                                        final String mile_number=jsonObject.optString("mile_number");
-                                        final String gas_num=jsonObject.optString("gas_num");
-                                        final String engine_performance=jsonObject.optString("engine_performance");
-                                        final String speed_shift=jsonObject.optString("speed_shift");
-                                        final String car_lamb=jsonObject.optString("car_lamb");
-                                        StringRequest request=new StringRequest(Request.Method.POST, NetUrl.scan_result, new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String s) {
-                                                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
-                                            }
-                                        }, new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError volleyError) {
+                        .setTitle("车辆信息")
+                        .setMessage(str)
+                        .setPositiveButton("添加", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                    StringRequest request=new StringRequest(Request.Method.POST, NetUrl.scan_result, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String s) {
+                                            Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError volleyError) {
 
-                                            }
-                                        }){
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                HashMap<String,String>map=new HashMap<String,String>();
-                                                map.put("brand",brand);
-                                                map.put("sign",sign);
-                                                map.put("type",type);
-                                                map.put("plate_number",plate_number);
-                                                map.put("engine_number",engine_number);
-                                                map.put("car_frame_number",car_frame_number);
-                                                map.put("body_level",body_level);
-                                                map.put("mile_number",mile_number);
-                                                map.put("gas_num",gas_num);
-                                                map.put("engine_performance",engine_performance);
-                                                map.put("speed_shift",speed_shift);
-                                                map.put("car_lamb",car_lamb);
-                                                map.put("username",username);
-                                                return map;
-                                            }
-                                        };
-                                        queue.add(request);
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            })
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .show();
+                                        }
+                                    }){
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            HashMap<String,String>map=new HashMap<String,String>();
+                                            map.put("brand",brand1);
+                                            map.put("sign",sign1);
+                                            map.put("type",type1);
+                                            map.put("plate_number",plate_number1);
+                                            map.put("engine_number",engine_number1);
+                                            map.put("car_frame_number",car_frame_number1);
+                                            map.put("body_level",body_level1);
+                                            map.put("mile_number",mile_number1);
+                                            map.put("gas_num",gas_num1);
+                                            map.put("engine_performance",engine_performance1);
+                                            map.put("speed_shift",speed_shift1);
+                                            map.put("car_lamb",car_lamb1);
+                                            map.put("username",username);
+                                            return map;
+                                        }
+                                    };
+                                    queue.add(request);
 
 
-                    Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(Firstpage.this,QRcodeResult.class);
-                    intent.putExtra("qrcode_result",result);
-                    startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .show();
+                    //Toast.makeText(Firstpage.this,result,Toast.LENGTH_LONG).show();
+                    //Intent intent=new Intent(Firstpage.this,QRcodeResult.class);
+                    //intent.putExtra("qrcode_result",result);
+                    //startActivity(intent);
                 }
                 else
                 {
