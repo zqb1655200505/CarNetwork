@@ -694,7 +694,7 @@ public class Firstpage extends AppCompatActivity{
                             }
                         })
                         .show();
-                    //Toast.makeText(Firstpage.this,result,Toast.LENGTH_LONG).show();
+                    Toast.makeText(Firstpage.this,result,Toast.LENGTH_LONG).show();
                     //Intent intent=new Intent(Firstpage.this,QRcodeResult.class);
                     //intent.putExtra("qrcode_result",result);
                     //startActivity(intent);
