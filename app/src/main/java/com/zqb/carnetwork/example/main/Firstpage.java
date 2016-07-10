@@ -600,7 +600,24 @@ public class Firstpage extends AppCompatActivity{
                 if(resultCode == RESULT_OK){
                     Bundle bundle = data.getExtras();
                     String result=bundle.getString("result");
-                    //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+                    try {
+                        JSONObject jsonObject=new JSONObject(result);
+                        String brand=jsonObject.optString("brand");
+                        String sign=jsonObject.optString("sign");
+                        String type=jsonObject.optString("type");
+                        String plate_number=jsonObject.optString("plate_number");
+                        String engine_number=jsonObject.optString("engine_number");
+                        String body_level=jsonObject.optString("body_level");
+                        String mile_number=jsonObject.optString("mile_number");
+                        String gas_num=jsonObject.optString("gas_num");
+                        String engine_performance=jsonObject.optString("engine_performance");
+                        String speed_shift=jsonObject.optString("speed_shift");
+                        String car_lamb=jsonObject.optString("car_lamb");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(Firstpage.this,QRcodeResult.class);
                     intent.putExtra("qrcode_result",result);
                     startActivity(intent);
