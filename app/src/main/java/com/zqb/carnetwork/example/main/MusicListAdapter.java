@@ -58,7 +58,7 @@ public class MusicListAdapter extends BaseAdapter {
 //        Bitmap imageBitmap = BitmapFactory.decodeFile(path);
 //        if(imageBitmap!=null)
 //            holder.album.setImageBitmap(imageBitmap);
-        int musicTime = mData.get(position).getDuration() / 1000;
+        int musicTime = mData.get(position).getDuration() / 1000;//计算时长，最初以毫秒为单位
         String time= musicTime / 60 + ":" + musicTime % 60;
         holder.duration.setText(time);
         holder.music_name.setText(mData.get(position).getTitle());

@@ -377,7 +377,6 @@ public class Firstpage extends AppCompatActivity{
         drawer_layout= (DrawerLayout) findViewById(R.id.drawer_layout);
         fManager=getSupportFragmentManager();
         leftFragment=(LeftFragment)fManager.findFragmentById(R.id.left_fg);
-        leftFragment.setValue(cur_position,isplaying);
         leftFragment.setDrawerLayout(drawer_layout);
         toolbar= (Toolbar) findViewById(R.id.tl_custom);
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -396,6 +395,9 @@ public class Firstpage extends AppCompatActivity{
         };
         mDrawerToggle.syncState();
         drawer_layout.setDrawerListener(mDrawerToggle);
+
+
+
         //获取本机音乐
         contentResolver=this.getContentResolver();
         musicLoader=MusicLoader.instance(contentResolver);
@@ -438,7 +440,6 @@ public class Firstpage extends AppCompatActivity{
                     cur_position=list.size()-1;
                 }
                 isplaying = true;
-                leftFragment.setValue(cur_position,isplaying);
             }
         });
         later.setOnClickListener(new View.OnClickListener() {
@@ -452,7 +453,6 @@ public class Firstpage extends AppCompatActivity{
                     cur_position=0;
                 }
                 isplaying=true;
-                leftFragment.setValue(cur_position,isplaying);
             }
         });
         play_pause.setOnClickListener(new View.OnClickListener() {
@@ -463,14 +463,12 @@ public class Firstpage extends AppCompatActivity{
                     play_pause.setImageDrawable(getResources().getDrawable(R.drawable.play));
                     sendBroadcastToService(ConstUtil.STATE_PAUSE,cur_position);
                     isplaying=false;
-                    leftFragment.setValue(cur_position,isplaying);
                 }
                 else
                 {
                     play_pause.setImageDrawable(getResources().getDrawable(R.drawable.pause));
                     sendBroadcastToService(ConstUtil.STATE_PLAY,cur_position);
                     isplaying=true;
-                    leftFragment.setValue(cur_position,isplaying);
                 }
             }
         });
@@ -494,6 +492,11 @@ public class Firstpage extends AppCompatActivity{
     {
         LayoutInflater inflater= (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupWindowView=inflater.inflate(R.layout.popup_window,null);
+        /*
+        *param[0]:view
+        * param[1]:width
+        * param[2]:height
+         */
         PopupWindow popupWindow=new PopupWindow(popupWindowView,
                 getWindowManager().getDefaultDisplay().getWidth()-32,
                 getWindowManager().getDefaultDisplay().getHeight()/2);
@@ -516,7 +519,6 @@ public class Firstpage extends AppCompatActivity{
                 sendBroadcastToService(ConstUtil.STATE_PLAY, position);
                 isplaying=true;
                 cur_position=position;
-                leftFragment.setValue(cur_position,isplaying);
             }
         });
     }
@@ -567,7 +569,6 @@ public class Firstpage extends AppCompatActivity{
         public void onReceive(Context context, Intent intent) {
             // 获取Intent中的current消息，current代表当前正在播放的歌曲
             cur_position = intent.getIntExtra("current", -1);
-            leftFragment.setValue(cur_position,isplaying);
             flag=intent.getIntExtra("isplaying",-1);
             //Toast.makeText(getApplicationContext(),flag+"",Toast.LENGTH_LONG).show();
             if(flag==1)

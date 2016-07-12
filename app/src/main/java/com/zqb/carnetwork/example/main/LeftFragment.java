@@ -140,8 +140,6 @@ public class LeftFragment extends Fragment {
                     case 4:
                     {
                         Intent intent=new Intent(getContext(), MyHome.class);
-                        intent.putExtra("cur_position",cur_position);
-                        intent.putExtra("isplaying",isplaying);
                         startActivity(intent);
                         break;
                     }
@@ -151,14 +149,6 @@ public class LeftFragment extends Fragment {
         });
         return view;
     }
-
-
-    protected void setValue(int cur_position, boolean isplaying)
-    {
-        this.isplaying=isplaying;
-        this.cur_position=cur_position;
-    }
-
 
     //暴露给Activity，用于传入DrawerLayout，因为点击后想关掉DrawerLayout
     public void setDrawerLayout(DrawerLayout drawer_layout){

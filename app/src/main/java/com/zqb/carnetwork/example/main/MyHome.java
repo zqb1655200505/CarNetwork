@@ -58,12 +58,7 @@ public class MyHome extends AppCompatActivity {
     private RequestQueue queue;
     private LinearLayout linearLayout1;
     private LinearLayout linearLayout2;
-
-    private boolean isplaying=true;
-    private List<MusicInfo>list;
     private TextView tv_name;
-    private final static int SCANNIN_GREQUEST_CODE = 1;
-    private int cur_position=0;//记录当前播放歌曲
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +103,6 @@ public class MyHome extends AppCompatActivity {
 
         linearLayout1 = (LinearLayout) findViewById(R.id.myOrder);
         linearLayout2 = (LinearLayout) findViewById(R.id.myGarage);
-        //linearLayout3 = (LinearLayout) findViewById(R.id.personalInformation);
-        //linearLayout4 = (LinearLayout) findViewById(R.id.signOut);
         head_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +114,6 @@ public class MyHome extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(MyHome.this,MyOrder.class);
                 startActivity(intent);
-                //Log.i("hahah","你点击了第1项");
             }
         });
 
