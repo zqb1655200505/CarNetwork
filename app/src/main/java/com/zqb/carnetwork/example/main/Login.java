@@ -101,12 +101,14 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onResponse(String s) {
                                 try {
+                                    Log.i("sssssssssssssss",s);
                                     String jsonStr=s; // 需要解析json格式的字符串
                                     if(jsonStr != null && jsonStr.startsWith("\ufeff"))
                                     {
                                         jsonStr =  jsonStr.substring(1);
                                     }
                                     JSONObject jsonObject = new JSONObject(jsonStr);
+                                    Log.i("jsonObject",jsonObject.toString());
                                     String type=jsonObject.optString("type");
                                     if(type.equals("null"))
                                     {
